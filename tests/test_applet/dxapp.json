@@ -1,0 +1,94 @@
+{
+  "name": "test_applet",
+  "title": "TestApplet",
+  "summary": "A bare bones ",
+  "dxapi": "1.0.0",
+  "version": "1.4.0",
+  "openSource": false,
+  "inputSpec": [
+    {
+      "name": "req_test_opt",
+      "label": "A required testing option.",
+      "class": "string",
+      "optional": false,
+      "help": "A testing option to test required options."
+    },
+    {
+      "name": "opt_test_opt",
+      "label": "An optional testing option.",
+      "class": "string",
+      "optional": true,
+      "default": null,
+      "help": "A testing option to test optional options."
+    },
+    {
+      "name": "output_prefix",
+      "label": "Prefix to use for naming output tar file.",
+      "class": "string",
+      "optional": false,
+      "help": "Prefix to use for naming output tar file."
+    },
+    {
+      "name": "testing_script",
+      "label": "Invoke the test suite by providing a script compatible with the 'pytest' module.",
+      "class": "file",
+      "optional": true,
+      "default": null,
+      "help": "Invoke the runassociationtesting test suite by providing a script compatible with the 'pytest' module. DO NOT use this flag unless you know what you are doing!"
+    },
+    {
+      "name": "testing_directory",
+      "label": "Directory name containing test files.",
+      "class": "string",
+      "optional": true,
+      "default": null,
+      "help": "Directory name containing test files. DO NOT use this flag unless you know what you are doing!"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "output_tarball",
+      "label": "Output tarball with association stats",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": "Output tarball with association stats"
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "python3",
+    "file": "src/test_applet.py",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0",
+    "assetDepends": [],
+    "execDepends": [
+      {
+        "name": "general_utilities",
+        "package_manager": "git",
+        "url":  "https://github.com/mrcepid-rap/general_utilities.git",
+        "build_commands": "pip3 install ."
+      }
+    ]
+  },
+  "access": {
+    "network": ["*"],
+    "allProjects": "VIEW"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

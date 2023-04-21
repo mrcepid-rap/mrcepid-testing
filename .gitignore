@@ -1,1 +1,7 @@
 /.talismanrc
+/test_out/
+/tests/.pytest_cache/
+/mrcepid_testing.egg-info/
+/build/
+/.pytest_cache/
+/tests/test_out/
