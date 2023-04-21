@@ -390,5 +390,5 @@ def run_testing(parsed_options: argparse.Namespace) -> dict:
 
 
 if __name__ == "__main__":
-    parsed = parse_command_line(sys.argv)
+    parsed = parse_command_line(sys.argv[1:])
     run_testing(parsed)

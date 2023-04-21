@@ -10,6 +10,9 @@
 
 ## Changelog
 
+* v1.0.1
+  * Bug fix to argument parsing when using command-line tool
+  
 * v1.0.0
   * Initial release
   * Added ability to test any applet that implements the `test()` method in its primary `src/` script
