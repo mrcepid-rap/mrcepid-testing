@@ -2,11 +2,13 @@
 
 ## Table of Contents
 
+- [Changelog](#changelog)
+- [Installation](#installation)
 - [Implementation](#implementation)
-- [Running Tests](#running-tests)
   * [Command Line Arguments](#command-line-arguments)
   * [Command-line Example](#command-line-example)
-  * [Testing Modules](#testing-modules)
+  * [Testing mrcepid-runassociationtesting Modules](#testing-mrcepid-runassociationtesting-modules)
+- [Running Tests of This Tool](#running-tests-of-this-tool)
 
 ## Changelog
 
