@@ -2,13 +2,21 @@
 
 ## Table of Contents
 
+- [Changelog](#changelog)
+- [Installation](#installation)
 - [Implementation](#implementation)
-- [Running Tests](#running-tests)
   * [Command Line Arguments](#command-line-arguments)
   * [Command-line Example](#command-line-example)
-  * [Testing Modules](#testing-modules)
+  * [Testing mrcepid-runassociationtesting Modules](#testing-mrcepid-runassociationtesting-modules)
+- [Running Tests of This Tool](#running-tests-of-this-tool)
 
 ## Changelog
+
+* v1.0.2
+  * Added MIT licence
+  * Small README changes for clarity
+  * Updated dxpy version
+  * refactored `tests/` to `test/` for consistency with other modules / applets
 
 * v1.0.1
   * Bug fix to argument parsing when using command-line tool
