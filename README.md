@@ -12,6 +12,12 @@
 
 ## Changelog
 
+* v1.0.2
+  * Added MIT licence
+  * Small README changes for clarity
+  * Updated dxpy version
+  * refactored `tests/` to `test/` for consistency with other modules / applets
+
 * v1.0.1
   * Bug fix to argument parsing when using command-line tool
   
