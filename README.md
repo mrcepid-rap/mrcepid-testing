@@ -12,6 +12,10 @@
 
 ## Changelog
 
+* v1.0.3
+  * Added 'tag' to module processing instead of using 'git checkout'
+  * Fixed oversight where 'hours' was not reflected on timestamp 
+
 * v1.0.2
   * Added MIT licence
   * Small README changes for clarity
