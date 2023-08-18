@@ -1,12 +1,11 @@
 import dxpy
 
 from pathlib import Path
-
 from mrcepid_testing.test_launch import parse_command_line, run_testing, RunningStatus
 
 
 def test_argumentparsing():
-    arguments = ['--script', './mock_pytest.py',
+    arguments = ['--script', './test_data/mock_pytest.py',
                  '--files', './test_data/',
                  '--root_dir', './test_applet/',
                  '--json', './test_applet/dxapp.json',
@@ -15,7 +14,7 @@ def test_argumentparsing():
                  '--modules', 'general_utilities', 'burden:v1.2.0']
 
     parsed = parse_command_line(arguments)
-    assert parsed.script.samefile(Path('./mock_pytest.py'))
+    assert parsed.script.samefile(Path('test_data/mock_pytest.py'))
     assert parsed.files.samefile(Path('./test_data/'))
     assert parsed.src_dir.samefile(Path('./test_applet/'))
     assert parsed.json.samefile(Path('./test_applet/dxapp.json'))
@@ -35,7 +34,7 @@ def test_argumentparsing():
 def test_app_launch():
     """Test the standard testing framework with correct options"""
 
-    arguments = ['--script', './mock_pytest.py',
+    arguments = ['--script', './test_data/mock_pytest.py',
                  '--files', './test_data/',
                  '--root_dir', './test_applet/',
                  '--json', './test_applet/dxapp.json',
