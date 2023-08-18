@@ -64,8 +64,8 @@ class BuildMRCApplet:
 
     def __init__(self, test_script: Path, test_files: Path, src_dir: Path,
                  dx_json: Path, modules: List[Dict[str, str]]):
-        self.test_time = datetime.now().strftime('%Y%m%d%M%S')
-        logging.info(f'Test timestamp (in format "YYYYMMDDmmss"): {self.test_time}')
+        self.test_time = datetime.now().strftime('%Y%m%d%H%M%S')
+        logging.info(f'Test timestamp (in format "YYYYMMDDhhmmss"): {self.test_time}')
 
         if dx_json is None:
             self.dx_json = src_dir.joinpath('dxapp.json')
@@ -105,7 +105,7 @@ class BuildMRCApplet:
                     found_module = True
                     if module['version'] != 'main':
                         logging.info(f'Loading additional module {module["name"]} from branch {module["version"]}')
-                        json_module['build_commands'] = f'git checkout "{module["version"]}" && pip3 install .'
+                        json_module['tag'] = module['version']
                     else:
                         logging.info(f'Loading additional module {module["name"]}')
                     exec_depends.append(json_module)
@@ -364,6 +364,7 @@ def run_testing(parsed_options: argparse.Namespace) -> dict:
                     # Process outputs
                     tar = tarfile.open(out_tar, "r:gz")
                     tar.extractall(path=out_tar.parent)
+                    Path(out_tar.parent / 'dx_run.log')
                     logging.info(f'Results unpacked, see {out_tar.parent}/pytest.{testing.test_time}.log')
                     out_tar.unlink()
 
