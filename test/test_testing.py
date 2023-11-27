@@ -4,7 +4,7 @@ from pathlib import Path
 from mrcepid_testing.test_launch import parse_command_line, run_testing, RunningStatus
 
 
-def test_argumentparsing():
+def test_argument_parsing():
     arguments = ['--script', './test_data/mock_pytest.py',
                  '--files', './test_data/',
                  '--root_dir', './test_applet/',

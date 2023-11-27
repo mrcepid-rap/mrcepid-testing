@@ -12,6 +12,9 @@
 
 ## Changelog
 
+* v1.0.4
+  * Added support for nested folders in the folder provided to `--files`
+
 * v1.0.3
   * Added 'tag' to module processing instead of using 'git checkout'
   * Fixed oversight where 'hours' was not reflected on timestamp 
