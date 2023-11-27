@@ -12,7 +12,7 @@ def load_requirements(fname: Path):
 
 setup(
     name='mrcepid_testing',
-    version='1.0.3',
+    version='1.0.43',
     packages=find_packages(),
     url='https://github.com/mrcepid-rap/mrcepid-testing',
     license='MIT',
