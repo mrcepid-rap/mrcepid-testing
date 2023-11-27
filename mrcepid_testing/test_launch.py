@@ -15,7 +15,6 @@ import argparse
 
 from enum import Enum, auto
 from dxpy import DXAPIError
-from dxpy.api import container_remove_objects
 from dxpy.exceptions import InvalidInput
 from datetime import datetime
 from typing import Dict, Tuple, List
@@ -66,6 +65,8 @@ class BuildMRCApplet:
                  dx_json: Path, modules: List[Dict[str, str]]):
         self.test_time = datetime.now().strftime('%Y%m%d%H%M%S')
         logging.info(f'Test timestamp (in format "YYYYMMDDhhmmss"): {self.test_time}')
+
+        self._project = dxpy.DXProject(dxpy.PROJECT_CONTEXT_ID)
 
         if dx_json is None:
             self.dx_json = src_dir.joinpath('dxapp.json')
@@ -124,6 +125,16 @@ class BuildMRCApplet:
         exec_depends = {'runSpec': {'execDepends': exec_depends}}
         return exec_depends
 
+    def _upload_folder(self, folder: Path, root: Path):
+
+        root = root / folder.name
+        self._project.new_folder(folder=str(root))
+        for file in folder.glob('*'):
+            if file.is_dir():
+                self._upload_folder(file, root=root)
+            else:
+                dxpy.upload_local_file(filename=f'{file}', folder=str(root))
+
     def _set_up_class(self, test_script: Path, test_files: Path, src_dir: Path,
                       exec_depends: Dict) -> Tuple[str, str, dxpy.DXFile, List[Dict]]:
         """Upload a test version of this applet to DNANexus
@@ -161,11 +172,15 @@ class BuildMRCApplet:
         # And create a tmp_directory for outputs and place our test_script / test_files inside it
         try:
             folder_name = f'/{applet_basename}_tmpdata/'
-            dxpy.api.project_new_folder(object_id=dxpy.PROJECT_CONTEXT_ID,
-                                        input_params={'folder': folder_name})
+            self._project.new_folder(folder=folder_name)
             script_file_ref = dxpy.upload_local_file(filename=f'{test_script}', folder=folder_name)
+
             for file in test_files.glob('*'):
-                dxpy.upload_local_file(filename=f'{file}', folder=folder_name)
+                if file.is_dir():
+                    self._upload_folder(folder=file, root=Path(folder_name))
+                else:
+                    dxpy.upload_local_file(filename=f'{file}', folder=folder_name)
+
         except DXAPIError as dx_error:
             self._remove_resources()
             self._remove_applet()
@@ -203,7 +218,7 @@ class BuildMRCApplet:
     def _remove_applet(self):
         """Delete the applet using dxpy"""
         try:
-            container_remove_objects(dxpy.WORKSPACE_ID, {"objects": [self.applet_id]})
+            self._project.remove_objects(objects=[self.applet_id])
         except DXAPIError as e:
             print(f'Error removing {self.applet_id} during cleanup; ignoring.')
             print(e)
@@ -211,7 +226,7 @@ class BuildMRCApplet:
     def _remove_resources(self):
         """Delete the resources tar.gz using dxpy"""
         try:
-            container_remove_objects(dxpy.WORKSPACE_ID, {"objects": [self._resources[0]['id']['$dnanexus_link']]})
+            self._project.remove_objects(objects=[self._resources[0]['id']['$dnanexus_link']])
         except DXAPIError as e:
             print(f'Error removing {self._resources[0]["id"]["$dnanexus_link"]} during cleanup; ignoring.')
             print(e)
@@ -219,8 +234,7 @@ class BuildMRCApplet:
     def _remove_results_folder(self):
         """Delete the results folder using dxpy"""
         try:
-            dxpy.api.container_remove_folder(object_id=dxpy.PROJECT_CONTEXT_ID,
-                                             input_params={'folder': self.folder_name, 'recurse': True})
+            self._project.remove_folder(self.folder_name, recurse=True)
         except DXAPIError as e:
             print(f'Error removing folder {self.folder_name} during cleanup; ignoring.')
             print(e)
