@@ -10,6 +10,7 @@ authors = [ "Eugene Gardner <eugene.gardner@mrc-epid.cam.ac.uk>",]
 readme = "README.md"
 repository = "https://github.com/mrcepid-rap/mrcepid-testing"
 licence = "MIT"
+packages = [{include = 'mrcepid_test_loader'}, {include = 'mrcepid_testing'}]
 
 [tool.poetry.dependencies]
 python = "~3.8"
