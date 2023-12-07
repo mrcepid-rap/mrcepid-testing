@@ -114,13 +114,15 @@ class BuildMRCApplet:
                 logging.warning(f'Requested module {module["name"]} not found in dxapp.json!')
 
         # Always add the default test modules...
+        # This is slightly strange, but we install this package when we run testing and used the package
+        # 'mrcepid_test_loader' to run module-based tests.
         logging.info(f'Loading base testing module(s) pytest, test_loader')
         exec_depends.extend([{'name': 'pytest',
                               'package_manager': 'pip'
                               },
                              {'name': 'test_loader',
                               'package_manager': 'git',
-                              'url': 'https://github.com/mrcepid-rap/mrcepid-test_loader.git',
+                              'url': 'https://github.com/mrcepid-rap/mrcepid-testing.git',
                               'build_commands': 'pip3 install .'}])
         exec_depends = {'runSpec': {'execDepends': exec_depends}}
         return exec_depends
@@ -302,7 +304,7 @@ def parse_command_line(args) -> argparse.Namespace:
                              'Default is to use the dxapp.json found in "--root_dir".',
                         type=Path, dest='json', required=False, default=None)
     parser.add_argument('--instance_type', help='Modify the default instance type [mem1_ssd1_v2_x4].',
-                        type=str, dest='instance_type', required=False, default=None)
+                        type=str, dest='instance_type', required=False, default='mem1_ssd1_v2_x4')
     parser.add_argument('--add_opts',
                         help='Additional options required by the applet currently being tested. Values for options '
                              'can be specified with a ":" delimiter (e.g, option:value). Empty options can be '
