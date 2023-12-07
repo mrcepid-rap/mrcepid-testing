@@ -12,6 +12,10 @@
 
 ## Changelog
 
+* v1.1.0
+  * Refactored the mrcepid_test_loader module into this repository for ease in compatability
+  * Switched to pyproject.toml for build
+
 * v1.0.4
   * Added support for nested folders in the folder provided to `--files`
 
@@ -20,7 +24,7 @@
   * Fixed oversight where 'hours' was not reflected on timestamp 
 
 * v1.0.2
-  * Added MIT licence
+  * Added MIT licencel
   * Small README changes for clarity
   * Updated dxpy version
   * refactored `tests/` to `test/` for consistency with other modules / applets
