@@ -14,6 +14,7 @@
 
 * v1.1.0
   * Refactored the mrcepid_test_loader module into this repository for ease in compatability
+  * Switched to pyproject.toml for build
 
 * v1.0.4
   * Added support for nested folders in the folder provided to `--files`
