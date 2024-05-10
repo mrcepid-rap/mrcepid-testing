@@ -312,7 +312,8 @@ def parse_command_line(args) -> argparse.Namespace:
                         type=option_with_value, dest='add_opts', required=False, nargs='*', metavar='MODULE[:BRANCH]')
     parser.add_argument('--modules',
                         help='Additional modules to load with optional branch name parameter seperated by ":"',
-                        type=module_with_version, dest='modules', required=False, nargs='*', metavar='MODULE[:BRANCH]')
+                        type=module_with_version, dest='modules', required=False, nargs='*', metavar='MODULE[:BRANCH]',
+                        default=[])
     parsed_options = parser.parse_args(args)
 
     return parsed_options

@@ -10,7 +10,8 @@ import tarfile
 
 from pathlib import Path
 
-from general_utilities.association_resources import generate_linked_dx_file, run_cmd
+from general_utilities.association_resources import generate_linked_dx_file
+from general_utilities.job_management.command_executor import CommandExecutor
 from general_utilities.mrc_logger import MRCLogger
 
 LOGGER = MRCLogger().get_logger()
@@ -85,7 +86,8 @@ def test(output_prefix: str, req_test_opt: str, opt_test_opt: str, testing_scrip
     # outside of running pytest.
     out_log = Path(f'pytest.{output_prefix}.log')
     try:
-        run_cmd('pytest test.py', is_docker=False, stdout_file=out_log)
+        cmd_exec = CommandExecutor()
+        cmd_exec.run_cmd('pytest test.py', stdout_file=out_log)
     except RuntimeError:
         pass
 
